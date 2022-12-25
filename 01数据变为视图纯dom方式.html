@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>纯dom法</title>
+</head>
+
+<body>
+  <ul id="list"></ul>
+  <script>
+    var arr = [
+      { "name": "小明", "age": 12, "sex": "男" },
+      { "name": "小红", "age": 12, "sex": "男" },
+      { "name": "小强", "age": 12, "sex": "男" },
+    ];
+
+    //为了上树，先获取到list
+    var list = document.getElementById('list');
+
+    //对整个数组进行遍历
+    for (var i = 0; i < arr.length; i++) {
+      //每遍历一次，都要用dom方法创建li标签
+      let oLi = document.createElement('li');//创建li标签
+      //创建hd的div
+      let hdDiv = document.createElement('div');
+      hdDiv.className = 'hd';
+      hdDiv.innerText = arr[i].name + '的基本信息';
+      //创建bd的div
+      let bdDiv = document.createElement('div');
+      hdDiv.className = 'bd';//添加类名
+      //创建三个p
+      let p1 = document.createElement('p');
+      p1.innerText = '姓名：' + arr[i].name;
+      bdDiv.appendChild(p1);
+      let p2 = document.createElement('p');
+      p2.innerText = '年龄：' + arr[i].age;
+      bdDiv.appendChild(p2);
+      let p3 = document.createElement('p');
+      p3.innerText = '性别：' + arr[i].sex;
+      bdDiv.appendChild(p3);
+
+      //内部的问题
+      oLi.innerText = arr[i].name;
+      //创建的节点是孤儿节点，所以需要上树才能被用户看见
+      list.appendChild(oLi);//appendChild表示追加子节点
+      list.appendChild(hdDiv);
+      list.appendChild(bdDiv);
+    }
+  </script>
+</body>
+
+</html>
