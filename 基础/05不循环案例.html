@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>不循环案例</title>
+</head>
+
+<body>
+  <div id="container">
+  </div>
+
+  <script src="jslib/mustache.js"></script>
+  <script>
+    //引入文件后，能够使用mustache全局对象
+    // console.log(Mustache);//这里使用4.0.1版本
+    //使用模板字符串
+    //#arr就是循环的开始 /arr是循环的结束，数组长度是多少就循环几次
+    var templateStr = `
+      <h1>我买了一个{{thing}},好{{mood}}</h1>
+    `;
+    var data = {
+      thing: '华为手机',
+      mood: '开心'
+    };
+    //render方法接收两个参数，一个是模板，一个是数据，data是对象，对象中包含arr数组
+    var domStr = Mustache.render(templateStr, data);
+    //循环结束后，但不会在页面显示，这时候需要添加到dom上
+    var container = document.getElementById('container');
+    container.innerHTML = domStr;
+  </script>
+</body>
+
+</html>

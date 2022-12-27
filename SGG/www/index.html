@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>静态文件</title>
+</head>
+
+<body>
+  <div id="container"></div>
+  <!-- 这里就是最后打包生成的文件 -->
+  <script src="/xuni/bundle.js"></script>
+
+  <script>
+    //编译为tokens后结合数据，生成dom字符串
+    //模板字符串
+    // var templateStr = '我买了一个{{thing}},好{{mood}}啊';
+    //带#号需要使用递归
+    var templateStr = `
+      <ul>
+        {{#students}}
+          <li>{{name}}的爱好是:
+            <ol>
+              {{#hobbies}}
+                 <li>{{.}}</li>
+              {{/hobbies}}
+            </ol>  
+          </li>
+        {{/students}}
+      </ul>
+    `;
+    // 数据
+    var data = {
+      students: [
+        { 'name': '小明', 'age': 18, 'hobbies': ['游泳', '羽毛球'] },
+        { 'name': '小红', 'age': 62, 'hobbies': ['游泳',] },
+        { 'name': '小栏', 'age': 18, 'hobbies': ['游泳', '羽毛球', '羽毛球'] },
+      ]
+    };
+
+    //不带#号一层即可
+    // var templateStr = '我买了一个{{thing}},好{{mood}}啊,考{{a.b.c}}分';
+    // var data = {
+    //   thing: '华为手机',
+    //   mood: '开心',
+    //   a: {
+    //     b: {
+    //       c: 122
+    //     }
+    //   }
+    // }
+
+    //这是全局变量 render方法
+    var domStr = SGG.render(templateStr, data);
+
+    var container = document.getElementById('container');
+    //渲染上树
+    container.innerHTML = domStr;
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 最简单的模板引擎实现机理，利用的正则表达式中的replace()方法
+    replace()的第二个参数可以试一个函数，这个函数提供捕获的东西的参数，是$1
+    结合data对象，即可进行智能的替换。
+  -->
+  <script src="jslib/mustache.js"></script>
+  <script>
+    var templateStr = '<h1>我买了一个{{thing}},好{{mood}}</h1>';
+
+    var data = {
+      thing: '华为手机',
+      mood: '开心'
+    };
+    //使用replace方法，替换文字
+    // console.log('我爱尚硅谷，我爱打篮球'.replace('我', '你'));//这里只能替换第一个
+    //使用/ /g,可以全局生效
+    // console.log('我爱尚硅谷，我爱打篮球'.replace(/我/g, '你'));
+    //如果第二个参数是函数，那么其返回值就是要替换后的字符
+    //接收三个参数:当前匹配的字，这个字的位置，字符串的原串
+    //还有捕获功能：
+
+    console.log(templateStr.replace(/\{\{(\w+)\}\}/g, function (a, b, c, d) {
+      // console.log(a, b, c, d);
+      /*
+      要寻找的东西：{{thing}}，捕获的东西：thing，出现的位置：9
+      字符串原串：<h1>我买了一个{{thing}},好{{mood}}</h1>
+      */
+
+      //a就是findStr，要在其中寻找的。b就是要捕获的东西，一般用$1表示
+      return data[b];
+    }));
+
+    //将其封装为函数
+    function render(templateStr, data) {
+      return templateStr.replace(/\{\{(\w+)\}\}/g, function (findStr, $1) {
+        return data[$1];
+      })
+    }
+    var result = render(templateStr, data);
+    console.log(result);
+  </script>
+</body>
+
+</html>
